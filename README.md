@@ -1,4 +1,6 @@
 
+The goal of this project is to create a more organized way to store and refer back to saved comments on Reddit, with the use of "tags".
+
 Mongo models:
 
 - [ ] User
@@ -16,6 +18,7 @@ Mongo models:
   - [ ] list of tag strings
 
 api endpoints needed:
+
 - [ ] login/logout
 - [ ] get user info
   - [ ] reddit profile info (name, link to profile)
@@ -29,4 +32,5 @@ api endpoints needed:
 - [ ] Unsave an item (items are saved via reddit ui)
 
 frontend:
+
 - [ ] nice to have: tag autocomplete input box

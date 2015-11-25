@@ -34,10 +34,12 @@ app.get('/', function (req, res) {
 
 
 app.get('/takeahike', function(req, res) {
-	request.get('https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=94111&topic=hiking,%20hike%20hikes&radius=smart&key='+ meetupKey, function(error, response, body) {
+	var zipcode = req.query.zipcode;
+	request.get('https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip='+ zipcode +'&topic=hiking,%20hike%20hikes&radius=smart&key='+ meetupKey, function(error, response, body) {
 		console.log(error);	
 		if(!error && response.statusCode == 200) {
-			console.log(body);
+			var info = JSON.parse(body);
+			res.json(info);
 		}
 	});
 });

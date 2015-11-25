@@ -19,8 +19,13 @@
   "homepage": "https://github.com/vframbach/project1#readme",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "chai": "^3.4.1",
+    "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "hbs": "^4.0.0",
-    "mongoose": "^4.2.7"
+    "mocha": "^2.3.4",
+    "mongoose": "^4.2.7",
+    "request": "^2.67.0",
+    "require": "^2.4.20"
   }
 }

@@ -39,7 +39,7 @@ app.get('/takeahike', function(req, res) {
 		console.log(error);	
 		if(!error && response.statusCode == 200) {
 			var info = JSON.parse(body);
-			res.json(info);
+			res.render("map", { events: info.results });
 		}
 	});
 });

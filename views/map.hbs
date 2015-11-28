@@ -8,6 +8,7 @@
 		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="public/main.css">
+		<link rel="stylesheet" type="text/css" href="public/map.css">
 		<title>Hikes near me</title>
 	</head>
 	<body>
@@ -35,6 +36,15 @@
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
+		<div class="meetup-results col-md-4">
+		{{#each events}}
+			<h3>{{name}}</h3>
+			<p>{{group.name}}</p>
+			<p>{{venue.address_1}}</p>
+			<p>{{venue.city}}</p>
+		{{/each}}  
+		</div>
+
 		<!-- jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<!-- bootstrap js -->

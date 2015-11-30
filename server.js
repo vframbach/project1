@@ -19,7 +19,11 @@ var express = require('express'),
 var meetupKey = process.env.MEETUP_API_KEY;
 
 //connect to mongoDB
-mongoose.connect('mongodb://localhost/project1');
+mongoose.connect(
+	process.env.MONGOLAB_URI ||
+	process.env.MONGOHQ_URL ||
+	'mongodb://localhost/takeahike-app'
+);
 
 // require User model
 
@@ -122,6 +126,4 @@ app.get('/profile', function (req, res) {
 
 
 // listen on port 3000
-app.listen(3000, function() {
-	console.log('server started');
-});
+app.listen(process.env.PORT || 3000);

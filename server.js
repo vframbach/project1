@@ -12,6 +12,14 @@ var express = require('express'),
 
 var meetupKey = process.env.MEETUP_API_KEY;
 
+//connect to mongoDB
+mongoose.connect('mongodb://localhost/project1');
+
+// require User model
+
+var User = require('./models/user');
+
+
 
 // configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true }));

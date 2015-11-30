@@ -60,14 +60,14 @@ app.get('/', function (req, res) {
 
 
 
-
+// when zip code is entered on index page, returns results on takeahike page
 app.get('/takeahike', function(req, res) {
 	var zipcode = req.query.zipcode;
 	request.get('https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip='+ zipcode +'&topic=hiking,%20hike%20hikes&radius=smart&key='+ meetupKey, function(error, response, body) {
 		console.log('meetup response error', error);	
 		if(!error && response.statusCode == 200) {
 			var info = JSON.parse(body);
-			res.render("map", { events: info.results });
+			res.render("takeahike", { events: info.results });
 		}
 	});
 });
@@ -87,13 +87,15 @@ app.get('/login', function (req, res) {
 
 
 
-// sign up new user, then log them in
+// sign up new user, then log them in, redirect to profile page
+
 // hashes and salts passport, saves new user to db
 app.post('/signup', function (req, res) {
 	User.register(new User({ username: req.body.username}), req.body.password,
 		function (err, newUser) {
 			passport.authenticate('local')(req, res, function() {
-				res.send('signed up!');
+				// res.send('signed up!');
+				res.redirect('/profile');
 			});
 		}
 	);
@@ -101,7 +103,8 @@ app.post('/signup', function (req, res) {
 
 // log in user
 app.post('/login', passport.authenticate('local'), function (req, res) {
-	res.send('logged in!');
+	// res.send('logged in!');
+	res.redirect('/profile');
 });
 
 // log out user
@@ -109,6 +112,13 @@ app.get('/logout', function (req, res) {
 	req.logout();
 	res.redirect('/');
 });
+
+// shows user profile page
+app.get('/profile', function (req, res) {
+	res.render('profile', {user: req.user});
+});
+
+
 
 
 // listen on port 3000

@@ -74,6 +74,7 @@ app.get('/api/events', function(req, res) {
 			'sign': true,
 			'photo-host': 'public',
 			'topic': 'hiking,hike,hikes',
+			'page': 15,
 			'radius': 'smart',
 			'zip': zipcode,
 			'key': meetupKey

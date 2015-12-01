@@ -46,6 +46,14 @@ $(function() {
             }
             console.log(event);
 
+            // when marker is clicked, event name is shown in info window
+            var contentString = event.name;
+
+            var infowindow = new google.maps.InfoWindow({
+            	content: contentString
+            });
+
+
             var marker = new google.maps.Marker({
                 position: {
                     lat: lat,
@@ -54,6 +62,10 @@ $(function() {
                 map: map
             });
             bounds.extend(marker.position);
+            
+            marker.addListener('click', function() {
+            	infowindow.open(map, marker);
+            });
         });
         map.fitBounds(bounds);
 

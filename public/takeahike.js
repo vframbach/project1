@@ -1,3 +1,4 @@
+
 var map;
 
 function initMap() {
@@ -10,6 +11,7 @@ function initMap() {
     });
 }
 
+// look in url for zipcode
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -18,15 +20,18 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+//save zip code that user entered via the url
 var zipcode = getParameterByName('zipcode');
 
 $(function() {
     var source = $('#meetup-results-template').html();
     var template = Handlebars.compile(source);
 
-
+// show markers on map based on latitude and longitude of meetup location
+// if none listed, get latitude and longitude of group, if available
     $.get('/api/events', { zipcode: zipcode }, function(data) {
         //console.log(data.events[0].venue.lon);
+        var bounds = new google.maps.LatLngBounds();
         data.events.forEach(function(event) {
             var lat;
             var lng;
@@ -40,14 +45,17 @@ $(function() {
                 return;
             }
             console.log(event);
-            new google.maps.Marker({
+
+            var marker = new google.maps.Marker({
                 position: {
                     lat: lat,
                     lng: lng
                 },
                 map: map
             });
+            bounds.extend(marker.position);
         });
+        map.fitBounds(bounds);
 
         var takeahikeHtml = template({
             events: data.events

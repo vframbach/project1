@@ -65,15 +65,24 @@ app.get('/', function (req, res) {
 
 
 // when zip code is entered on index page, returns results on takeahike page
-app.get('/takeahike', function(req, res) {
+app.get('/api/events', function(req, res) {
 	var zipcode = req.query.zipcode;
-	request.get('https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip='+ zipcode +'&topic=hiking,%20hike%20hikes&radius=smart&key='+ meetupKey, function(error, response, body) {
+	request.get('https://api.meetup.com/2/open_events?&sign=true&photo-host=public&topic=hiking,%20hike%20hikes&radius=smart&zip='+ zipcode +'&key='+ meetupKey, function(error, response, body) {
 		console.log('meetup response error', error);	
 		if(!error && response.statusCode == 200) {
 			var info = JSON.parse(body);
-			res.render("takeahike", { events: info.results });
+			res.json({ events: info.results });
 		}
 	});
+});
+
+
+
+
+app.get('/takeahike', function(req, res) {
+
+	res.render('takeahike');
+		
 });
 
 

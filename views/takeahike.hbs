@@ -9,6 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="takeahike.css">
+		
 		<title>Hikes near me</title>
 	</head>
 	<body>
@@ -30,23 +31,30 @@
 						<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/signup">Sign up</a></li>
 						<li><a href="/login">Log in</a></li>
+						<li><a href="/signup">Sign up</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
-		<div class="meetup-results col-md-4">
-		{{#each events}}
-			<h3>{{name}}</h3>
-			<p>{{group.name}}</p>
-			<p>{{venue.address_1}}</p>
-			<p>{{venue.city}}</p>
-		{{/each}}  
-		</div>
-		<div class="">
-		<!-- map goes here -->
-		</div>
+		<div class="row">	
+			<div class="meetup-results col-md-4">
+				<script id="coordinates" type="text/x-handlebars-tempate">
+					{{#each events}}
+						<h3>{{name}}</h3>
+						<p>{{group.name}}</p>
+						<p>{{venue.address_1}}</p>
+						<p>{{venue.city}}</p>
+						<p>{{venue.lat}}</p>
+						<p>{{venue.lon}}</p>
+					{{/each}}
+				</script>	  
+			</div>
+			<div class="col-md-8">
+				<div id="map" class="initMap">map goes here</div>
+			</div>
+		</div>	
+		
 
 		<!-- jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -56,5 +64,8 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
 		<!-- custom script -->
 		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="takeahike.js"></script>
+
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuo9eqQBk5umxACJHmsGgPMbvfbD1zh0&callback=initMap"></script>
 	</body>
 </html>

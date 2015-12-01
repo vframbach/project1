@@ -37,19 +37,19 @@
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
+		<script id="meetup-results-template" type="text/x-handlebars-template">
+			\{{#each events}}
+				<h3>\{{name}}</h3>
+				<p>\{{group.name}}</p>
+				<p>\{{venue.address_1}}</p>
+				<p>\{{venue.city}}</p>
+				<p>\{{venue.lat}}</p>
+				<p>\{{venue.lon}}</p>
+			\{{/each}}
+		</script>
 		<div class="row">	
-			<div class="meetup-results col-md-4">
-				<script id="coordinates" type="text/x-handlebars-tempate">
-					{{#each events}}
-						<h3>{{name}}</h3>
-						<p>{{group.name}}</p>
-						<p>{{venue.address_1}}</p>
-						<p>{{venue.city}}</p>
-						<p>{{venue.lat}}</p>
-						<p>{{venue.lon}}</p>
-					{{/each}}
-				</script>	  
-			</div>
+			<div class="meetup-results col-md-4"></div>
+			
 			<div class="col-md-8">
 				<div id="map" class="initMap">map goes here</div>
 			</div>

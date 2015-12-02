@@ -1,4 +1,3 @@
-
 var map;
 
 function initMap() {
@@ -27,9 +26,11 @@ $(function() {
     var source = $('#meetup-results-template').html();
     var template = Handlebars.compile(source);
 
-// show markers on map based on latitude and longitude of meetup location
-// if none listed, get latitude and longitude of group, if available
-    $.get('/api/events', { zipcode: zipcode }, function(data) {
+    // show markers on map based on latitude and longitude of meetup location
+    // if none listed, get latitude and longitude of group, if available
+    $.get('/api/events', {
+        zipcode: zipcode
+    }, function(data) {
         //console.log(data.events[0].venue.lon);
         var bounds = new google.maps.LatLngBounds();
         data.events.forEach(function(event) {
@@ -47,10 +48,22 @@ $(function() {
             console.log(event);
 
             // when marker is clicked, event name is shown in info window
-            var contentString = event.name;
+
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h4 id="firstHeading" class="firstHeading">'+ event.name + '</h4>' +
+                '<div id="bodyContent">' +
+                '<p>' + event.group.name + '</p>' +
+                //'<p>' + event.venue.address_1 + '</p>' +
+                //'<p>' + event.venue.city  + '</p>' +
+                '<a href='+ event.event_url + '>' +
+                'Go to website</a> ' +
+                '</div>' +
+                '</div>';
 
             var infowindow = new google.maps.InfoWindow({
-            	content: contentString
+                content: contentString
             });
 
 
@@ -61,10 +74,12 @@ $(function() {
                 },
                 map: map
             });
+
+            // map location adjusts to where markers are
             bounds.extend(marker.position);
-            
+
             marker.addListener('click', function() {
-            	infowindow.open(map, marker);
+                infowindow.open(map, marker);
             });
         });
         map.fitBounds(bounds);

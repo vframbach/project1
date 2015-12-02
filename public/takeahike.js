@@ -31,6 +31,7 @@ $(function() {
     $.get('/api/events', {
         zipcode: zipcode
     }, function(data) {
+    	var infowindow = new google.maps.InfoWindow();
         //console.log(data.events[0].venue.lon);
         var bounds = new google.maps.LatLngBounds();
         data.events.forEach(function(event) {
@@ -47,25 +48,26 @@ $(function() {
             }
             console.log(event);
 
-            // when marker is clicked, event name is shown in info window
+            
+            // not every event has a venue. if no venue, skips over address and city
+            var venueString = '';
+            if (event.venue) {
+                venueString = '<p>' + event.venue.address_1 + '</p>' +
+                              '<p>' + event.venue.city  + '</p>';
+            }
 
+            // when marker is clicked, event info is shown in info window
             var contentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<h4 id="firstHeading" class="firstHeading">'+ event.name + '</h4>' +
                 '<div id="bodyContent">' +
                 '<p>' + event.group.name + '</p>' +
-                //'<p>' + event.venue.address_1 + '</p>' +
-                //'<p>' + event.venue.city  + '</p>' +
-                '<a href='+ event.event_url + '>' +
+                venueString +
+                '<a href="'+ event.event_url + '" target="_blank">' +
                 'Go to website</a> ' +
                 '</div>' +
                 '</div>';
-
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
 
             var marker = new google.maps.Marker({
                 position: {
@@ -79,6 +81,8 @@ $(function() {
             bounds.extend(marker.position);
 
             marker.addListener('click', function() {
+            	infowindow.close();
+            	infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             });
         });

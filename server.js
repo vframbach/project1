@@ -71,7 +71,9 @@ passport.use(new MeetupOAuth2Strategy({
 	callbackURL: process.env.MEETUP_CALLBACKURL,
 	autoGenerateUsername: true
 }, function (accessToken, refreshToken, profile, done)	{
-		return done(null, profile);
+	console.log('authed', accessToken);
+	profile.accessToken = accessToken;
+	return done(null, profile);
 }));
 
 
@@ -89,21 +91,40 @@ app.get('/takeahike', function(req, res) {
 		
 });
 
+
+
 // when zip code is entered on index page, returns results on takeahike page
 app.get('/api/events', function(req, res) {
 	var zipcode = req.query.zipcode;
-
-	request.get({
-		'url': 'https://api.meetup.com/2/open_events',
-		'qs': {
-			'sign': true,
+	
+	// meetup api parameters
+	var qs = {
 			'photo-host': 'public',
 			'topic': 'hiking,hike,hikes',
 			'page': 15,
 			'radius': 'smart',
-			'zip': zipcode,
-			'key': meetupKey
-		}
+			'limited_events': true,
+			'zip': zipcode
+		};
+
+		// if user is logged in and has access token, that will be used to get results
+		// otherwise, my access key will be used
+
+		if (req.user && req.user.accessToken) {
+			console.log('getting events with token', req.user.accessToken);
+			qs.access_token = req.user.accessToken;
+		} else {
+			console.log('self signing');
+			qs.sign = true; 
+		 	qs.key = meetupKey;
+		} 
+			
+
+	request.get({
+		'url': 'https://api.meetup.com/2/open_events',
+		'qs': qs
+
+
 	}, function(error, response, body) {
 		console.log('meetup response error', error);
 		if(!error && response.statusCode == 200) {

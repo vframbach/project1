@@ -101,15 +101,14 @@ app.get('/api/events', function(req, res) {
 	var qs = {
 			'photo-host': 'public',
 			'topic': 'hiking,hike,hikes',
-			'page': 15,
+			'page': 20,
 			'radius': 'smart',
 			'limited_events': true,
 			'zip': zipcode
 		};
 
-		// if user is logged in and has access token, that will be used to get results
-		// otherwise, my access key will be used
-
+		// if user is logged in through meetup and has access token, that will be used to get results
+		// otherwise, my meetup access key will be used
 		if (req.user && req.user.accessToken) {
 			console.log('getting events with token', req.user.accessToken);
 			qs.access_token = req.user.accessToken;
@@ -148,14 +147,14 @@ app.get('/login', function (req, res) {
 	res.render('login');
 });
 
-//authenticate meetup request
+//authenticate MEETUP request
 app.get('/auth/meetup',
 	passport.authenticate('meetup', { session: false }),
 	function (req, res) {
 		res.json(req.user);
 	});
 
-//redirect user after authenticating them
+//redirect user after authenticating them with MEETUP
 app.get('/auth/meetup/callback', passport.authenticate('meetup', { failureRedirect: '/login' }),
 	function (req, res) {
 		res.redirect('/profile');

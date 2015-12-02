@@ -49,6 +49,14 @@ $(function() {
             console.log(event);
 
             
+            // not every event has a url. if no event url, link to meetup.com/"urlname"
+
+            // var urlName = '';
+            // if (event.event_url) {
+            // 	urlName = 'meetup.com/' + group.urlname; 
+            // }
+
+
             // not every event has a venue. if no venue, skips over address and city
             var venueString = '';
             if (event.venue) {

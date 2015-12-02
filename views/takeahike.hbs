@@ -35,6 +35,7 @@
 					</form>	
 					<form class="nav navbar-nav navbar-right">
 						{{#if user}}
+						<a href="/profile" class="btn btn-default">Profile</a>
 						<a href="/logout" class="btn btn-default">Log out</a>
 						{{else}}
 						<a href="/login" class="btn btn-default">Log in</a>
@@ -51,7 +52,7 @@
 					<p>\{{group.name}}</p>
 					<p>\{{venue.address_1}}</p>
 					<p>\{{venue.city}}, \{{venue.state}}</p>
-					<p><a href="\{{event_url}}" target="_blank">website</a></p>
+					<p><a href="\{{event_url}}" target="_blank" class="btn btn-default">Meetup website</a></p>
 					<p>\{{venue.lat}}</p>
 					<p>\{{venue.lon}}</p>
 				\{{/each}}

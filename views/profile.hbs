@@ -9,7 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="takeahike.css">
-		<title>Hikes near me</title>
+		<title>Profile page</title>
 	</head>
 	<body>
 		<nav class="navbar navbar-default">
@@ -27,15 +27,14 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="/takeahike">Map <span class="sr-only">(current)</span></a></li>
 					</ul>
 					<form class="nav navbar-nav navbar-right">
 						{{#if user}}
-						<a href="/profile" class="btn btn-default">Profile</a>
 						<a href="/logout" class="btn btn-default">Log out</a>
 						{{else}}
-						<button type="button" class="btn btn-default login-button">Log in</button>
-						<button type="button" class="btn btn-default signup-button">Sign up</button>
+						<a href="/login" class="btn btn-default">Log in</a>
+						<a href="/signup" class="btn btn-default">Sign up</a>
 						{{/if}}
 					</form>
 				</div><!-- /.navbar-collapse -->
@@ -47,5 +46,7 @@
 		<p>This is your profile page.</p>
 		{{/if}}
 	</div>
+<!-- handlebars -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>	
 </body>
 </html>	

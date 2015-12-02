@@ -11,12 +11,14 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	session = require('express-session'),
 	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
+	LocalStrategy = require('passport-local').Strategy,
+	MeetupOAuth2Strategy = require('passport-oauth2-meetup').Strategy;
 
 	// require and load dotenv
 	require('dotenv').load();
 
 var meetupKey = process.env.MEETUP_API_KEY;
+
 
 //connect to mongoDB
 mongoose.connect(
@@ -42,8 +44,16 @@ app.use(passport.session());
 
 // passport config, allow users to sign up, log in and out
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+// serialize and deserialize
+passport.serializeUser(function (user, done) {
+	done(null, user);
+});
+passport.deserializeUser(function (obj, done) {
+	done(null, obj);
+});
 
 // configure body-parser (for form data)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,6 +64,17 @@ app.use(express.static(__dirname + '/public'));
 // express will use hbs in views directory
 app.set('view engine', 'hbs');
 
+// passport-meetup config
+passport.use(new MeetupOAuth2Strategy({
+	clientID: process.env.MEETUP_OAUTH_KEY,
+	clientSecret: process.env.MEETUP_OAUTH_SECRET,
+	callbackURL: process.env.MEETUP_CALLBACKURL,
+	autoGenerateUsername: true
+}, function (accessToken, refreshToken, profile, done)	{
+	console.log('authed', accessToken);
+	profile.accessToken = accessToken;
+	return done(null, profile);
+}));
 
 
 // API routes
@@ -64,21 +85,45 @@ app.get('/', function (req, res) {
 
 
 
+app.get('/takeahike', function(req, res) {
+
+	res.render('takeahike',  {user: req.user});
+		
+});
+
+
+
 // when zip code is entered on index page, returns results on takeahike page
 app.get('/api/events', function(req, res) {
 	var zipcode = req.query.zipcode;
+	
+	// meetup api parameters
+	var qs = {
+			'photo-host': 'public',
+			'topic': 'hiking,hike,hikes',
+			'page': 20,
+			'radius': 'smart',
+			'limited_events': true,
+			'zip': zipcode
+		};
+
+		// if user is logged in through meetup and has access token, that will be used to get results
+		// otherwise, my meetup access key will be used
+		if (req.user && req.user.accessToken) {
+			console.log('getting events with token', req.user.accessToken);
+			qs.access_token = req.user.accessToken;
+		} else {
+			console.log('self signing');
+			qs.sign = true; 
+		 	qs.key = meetupKey;
+		} 
+			
 
 	request.get({
 		'url': 'https://api.meetup.com/2/open_events',
-		'qs': {
-			'sign': true,
-			'photo-host': 'public',
-			'topic': 'hiking,hike,hikes',
-			'page': 15,
-			'radius': 'smart',
-			'zip': zipcode,
-			'key': meetupKey
-		}
+		'qs': qs
+
+
 	}, function(error, response, body) {
 		console.log('meetup response error', error);
 		if(!error && response.statusCode == 200) {
@@ -88,14 +133,6 @@ app.get('/api/events', function(req, res) {
 	});
 });
 
-
-
-
-app.get('/takeahike', function(req, res) {
-
-	res.render('takeahike');
-		
-});
 
 
 // auth routes
@@ -110,7 +147,19 @@ app.get('/login', function (req, res) {
 	res.render('login');
 });
 
+//authenticate MEETUP request
+app.get('/auth/meetup',
+	passport.authenticate('meetup', { session: false }),
+	function (req, res) {
+		res.json(req.user);
+	});
 
+//redirect user after authenticating them with MEETUP
+app.get('/auth/meetup/callback', passport.authenticate('meetup', { failureRedirect: '/login' }),
+	function (req, res) {
+		res.redirect('/profile');
+	}
+);
 
 // sign up new user, then log them in, redirect to profile page
 

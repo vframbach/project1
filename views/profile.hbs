@@ -45,8 +45,14 @@
 				var username = "{{user.displayName}}";
 			</script>
 			<div class="jumbotron container">	
-				<h2>Welcome, {{user.displayName}}!</h2>
-				<p>This is your profile page.</p>
+				{{#if user.displayName}}
+					<h2>Welcome, {{user.displayName}}!</h2>
+					<p>This is your profile page.</p>
+				{{else}}
+				
+					<h2>Welcome, {{user.username}}!</h2>
+					<p>This is your profile page.</p>
+				{{/if}}
 				
 			</div>
 			<div class="col-md-8">

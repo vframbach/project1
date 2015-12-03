@@ -48,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// send flash messages
+// send flash messages- if errors
 app.use(flash());
 
 // passport config, allow users to sign up, log in and out
@@ -62,8 +62,6 @@ passport.serializeUser(function(user, done) {
 });
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
-
-
 
 });
 
@@ -91,13 +89,82 @@ passport.use(new MeetupOAuth2Strategy({
 }));
 
 
-// API routes
+// HOMEPAGE ROUTE
+
 app.get('/', function(req, res) {
 
     res.render('index');
 });
 
+///////////////////////////////
+// STATIC ROUTES
 
+// auth routes
+
+// show signup view
+app.get('/signup', function(req, res) {
+    if (req.user) {
+        res.redirect('/profile');
+    } else {
+        res.render('signup', {
+            user: req.user,
+            errorMessage: req.flash('signupError')
+        });
+    }
+
+});
+
+// show login view
+app.get('/login', function(req, res) {
+    if (req.user) {
+        res.redirect('/profile');
+    } else {
+        res.render('login', {
+            user: req.user,
+            errorMessage: req.flash('error')
+        });
+    }
+});
+
+// log in user
+app.post('/login', passport.authenticate('local', {
+	successRedirect:'/profile',
+	failureRedirect: '/login',
+	failureFlash: 'Incorrect username or password.'
+}));
+
+// log out user
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+// shows user profile page
+app.get('/profile', function(req, res) {
+    res.render('profile', {
+        user: req.user
+    });
+});
+
+// web socket
+// connect to socket
+io.on('connection', function(socket) {
+    console.log('user connected');
+
+    // receive and broadcast chat messages
+    socket.on('chat message', function(msg) {
+        console.log('message:', msg);
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+});
+
+
+////////////////////////////////
+//API ROUTES
 
 app.get('/takeahike', function(req, res) {
     res.render('takeahike', {
@@ -106,12 +173,11 @@ app.get('/takeahike', function(req, res) {
 });
 
 
-
 // when zip code is entered on index page, returns results on takeahike page
 app.get('/api/events', function(req, res) {
     var zipcode = req.query.zipcode;
 
-    // meetup api parameters
+    // Meetup API parameters
     var qs = {
         'photo-host': 'public',
         'topic': 'hiking,hike,hikes',
@@ -150,34 +216,6 @@ app.get('/api/events', function(req, res) {
 });
 
 
-
-// auth routes
-
-// show signup view
-app.get('/signup', function(req, res) {
-    if (req.user) {
-        res.redirect('/profile');
-    } else {
-        res.render('signup', {
-            user: req.user,
-            errorMessage: req.flash('signupError')
-        });
-    }
-
-});
-
-// show login view
-app.get('/login', function(req, res) {
-    if (req.user) {
-        res.redirect('/profile');
-    } else {
-        res.render('login', {
-            user: req.user,
-            errorMessage: req.flash('error')
-        });
-    }
-});
-
 //authenticate MEETUP request
 app.get('/auth/meetup',
     passport.authenticate('meetup', {
@@ -215,42 +253,6 @@ app.post('/signup', function(req, res) {
             }
         }
     );
-});
-
-// log in user
-app.post('/login', passport.authenticate('local', {
-	successRedirect:'/profile',
-	failureRedirect: '/login',
-	failureFlash: 'Incorrect username or password.'
-}));
-
-// log out user
-app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
-// shows user profile page
-app.get('/profile', function(req, res) {
-    res.render('profile', {
-        user: req.user
-    });
-});
-
-// web socket
-// connect to socket
-io.on('connection', function(socket) {
-    console.log('user connected');
-
-    // receive and broadcast chat messages
-    socket.on('chat message', function(msg) {
-        console.log('message:', msg);
-        io.emit('chat message', msg);
-    });
-
-    socket.on('disconnect', function() {
-        console.log('user disconnected');
-    });
 });
 
 

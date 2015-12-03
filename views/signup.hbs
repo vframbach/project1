@@ -9,6 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="takeahike.css">
+		<link rel="stylesheet" type="text/css" href="signup.css">
 		<title>Sign up</title>
 	</head>
 	<body>
@@ -41,7 +42,8 @@
       <div class="container">{{errorMessage}}</div>
     </div>
   {{/if}}
-
+<div class="container col-md-4">
+</div>
 <div class="container col-md-4">
 	<h2>Sign Up</h2>
 	<br>
@@ -54,7 +56,7 @@
 	    <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6">
 	  </div>
 	  <div class="form-group">
-	  	<a href="/auth/meetup" class="btn btn-block btn-danger">Sign in with Meetup</a>
+	  	<a href="/auth/meetup" class="btn btn-block btn-danger">Log in with Meetup</a>
 	    <input type="submit" class="btn btn-block btn-default" value="Sign Up">
 	    <a href="/login">Log in</a>
 	  </div>

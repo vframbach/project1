@@ -3,7 +3,7 @@ var map;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 37.78,
+            lat: 37.78, 
             lng: -122.44
         },
         zoom: 12
@@ -19,8 +19,42 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-//save zip code that user entered via the url
+// cookie name, cookie value, cookie expiration
+// http://www.w3schools.com/js/js_cookies.asp
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+// get zip code that user entered via the url
 var zipcode = getParameterByName('zipcode');
+
+// if no zipcode was entered, grab it from the cookie
+if (!zipcode) {
+    zipcode = getCookie('zipcode');
+}
+// else, the user set a zipcode, so store it in the cookie
+else {
+    setCookie('zipcode', zipcode, 14);
+}
+
+// if there's still no zipcode, fall back to some default fallback
+if (!zipcode) {
+    zipcode = 90210;
+}
 
 $(function() {
     var source = $('#meetup-results-template').html();
@@ -37,6 +71,7 @@ $(function() {
         data.events.forEach(function(event) {
             var lat;
             var lng;
+
             if (event.venue) {
                 lat = event.venue.lat;
                 lng = event.venue.lon;
@@ -46,18 +81,19 @@ $(function() {
             } else {
                 return;
             }
+
+            if (lat === 0 || lng === 0) {
+                return;
+            }
+
             console.log(event);
 
             
-
-            
-            // not every event has a url. if no event url, link to meetup.com/"urlname"
-
+            // if there's no event url, try to put one together from data
             
             if (!event.event_url) {
-            	event.event_url ='http://meetup.com/' + event.group.urlname;
+            	event.event_url ='http://meetup.com/' + event.group.urlname + '/events/' + event.id;
             	console.log(event.event_url);
-            	//urlName = 'meetup.com/' + event.group.urlname; 
             }
 
 

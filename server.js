@@ -162,7 +162,9 @@ io.on('connection', function(socket) {
     });
 });
 
-
+// send username directly to profile.js so it displays with chat message
+// app.get( )
+// res.json
 ////////////////////////////////
 //API ROUTES
 

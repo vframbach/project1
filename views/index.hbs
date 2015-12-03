@@ -12,13 +12,15 @@
 		<title>Take a hike</title>
 	</head>
 	<body>
+		<div class="col-sm-6">		
 		<h1>Find a hiking group near you</h1>
 		<form class="form-inline zipcode-box" method="get" action="takeahike">
 			<div class="form-group">
-				<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required>
+				<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required minlength="5">
 				<button type="submit" class="btn btn-default">Go!</button>
 			</div>
 		</form>
+		</div>
 		<!-- jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<!-- bootstrap js -->

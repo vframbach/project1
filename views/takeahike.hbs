@@ -29,7 +29,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<form class="form-inline" method="get" action="takeahike">
 						<div class="form-group">
-							<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required>
+							<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required minlength="5">
 							<button type="submit" class="btn btn-default">Go!</button>
 						</div>
 					</form>	
@@ -53,8 +53,8 @@
 					<p>\{{venue.address_1}}</p>
 					<p>\{{venue.city}}, \{{venue.state}}</p>
 					<p><a href="\{{event_url}}" target="_blank" class="btn btn-default">Meetup website</a></p>
-					// <p>\{{venue.lat}}</p>
-					// <p>\{{venue.lon}}</p> 
+					<p>\{{venue.lat}}</p>
+					<p>\{{venue.lon}}</p> 
 				\{{/each}}
 			</script>
 			<div class="row">

@@ -9,6 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="takeahike.css">
+		<link rel="stylesheet" type="text/css" href="profile.css">
 		<title>Profile page</title>
 	</head>
 	<body>
@@ -27,14 +28,15 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/takeahike">Map <span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="/takeahike">Map 
+						<span class="sr-only">(current)</span></a></li>
 					</ul>
 					<form class="nav navbar-nav navbar-right">
 						{{#if user}}
-						<a href="/logout" class="btn btn-default">Log out</a>
+						<a href="/logout" class="btn btn-link">Log out</a>
 						{{else}}
-						<a href="/login" class="btn btn-default">Log in</a>
-						<a href="/signup" class="btn btn-default">Sign up</a>
+						<a href="/login" class="btn btn-link">Log in</a>
+						<a href="/signup" class="btn btn-link">Sign up</a>
 						{{/if}}
 					</form>
 				</div><!-- /.navbar-collapse -->
@@ -42,9 +44,10 @@
 		</nav>	
 		{{#if user}}
 			<script type="text/javascript">
-				var username = "{{user.displayName}}";
+				var username1 = "{{user.displayName}}";
+				var username2 = "{{user.username}}";
 			</script>
-			<div class="jumbotron container">	
+			<div class="jumbotron container welcome-box">	
 				{{#if user.displayName}}
 					<h2>Welcome, {{user.displayName}}!</h2>
 					<p>This is your profile page.</p>
@@ -56,9 +59,9 @@
 				
 			</div>
 			<div class="col-md-8">
-
+			<h4>Chat with other hikers</h4>
 			 <!-- list of messages -->
-		  		<ul id="messages">Chat with other members</ul>
+		  		<ul id="messages"></ul>
 
 			  <!-- form to send a new message -->
 			  <form id="send-msg">

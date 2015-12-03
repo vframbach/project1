@@ -37,6 +37,7 @@ $(function() {
         data.events.forEach(function(event) {
             var lat;
             var lng;
+
             if (event.venue) {
                 lat = event.venue.lat;
                 lng = event.venue.lon;
@@ -46,6 +47,9 @@ $(function() {
             } else {
                 return;
             }
+
+
+
             console.log(event);
 
             

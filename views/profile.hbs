@@ -39,14 +39,39 @@
 					</form>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
-		</nav>
-	<div class="container">		
+		</nav>	
 		{{#if user}}
-		<h2>Welcome, {{user.username}}!</h2>
-		<p>This is your profile page.</p>
-		{{/if}}
-	</div>
-<!-- handlebars -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>	
+			<script type="text/javascript">
+				var username = "{{user.displayName}}";
+			</script>
+			<div class="container">	
+				<h2>Welcome, {{user.displayName}}!</h2>
+				<p>This is your profile page.</p>
+				
+			</div>
+			<div class="col-md-8">
+
+			 <!-- list of messages -->
+		  		<ul id="messages">Chat with other members</ul>
+
+			  <!-- form to send a new message -->
+			  <form id="send-msg">
+			    <input type="text" id="new-msg" placeholder="Your message" autofocus>
+			    <input type="submit" value="Send">
+			  </form>
+		  </div>
+	  {{/if}}
+  <!-- jquery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- bootstrap js -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- handlebars -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+<!-- socket.io -->
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>	
+    <!-- custom script -->
+<script type="text/javascript" src="profile.js"></script>
+<!-- <script type="text/javascript" src="takeahike.js"></script> -->
+
 </body>
 </html>	

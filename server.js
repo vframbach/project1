@@ -6,6 +6,8 @@ var express = require('express'),
 	hbs = require('hbs'),
 	mongoose = require('mongoose'),
 	request = require('request'),
+	http = require('http').Server(app), // node http server
+	io = require('socket.io')(http),
 
 	// auth
 	cookieParser = require('cookie-parser'),
@@ -13,6 +15,8 @@ var express = require('express'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	MeetupOAuth2Strategy = require('passport-oauth2-meetup').Strategy;
+
+
 
 	// require and load dotenv
 	require('dotenv').load();
@@ -189,11 +193,30 @@ app.get('/logout', function (req, res) {
 
 // shows user profile page
 app.get('/profile', function (req, res) {
+	console.log(req.user);
 	res.render('profile', {user: req.user});
+});
+
+// web socket
+// connect to socket
+io.on('connection', function (socket) {
+  console.log('user connected');
+
+  // receive and broadcast chat messages
+  socket.on('chat message', function (msg) {
+    console.log('message:', msg);
+    io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
 });
 
 
 
-
 // listen on port 3000
-app.listen(process.env.PORT || 3000);
+//app.listen(process.env.PORT || 3000);
+http.listen(process.env.PORT || 3000, function() { // node http server
+	console.log('server started');
+});

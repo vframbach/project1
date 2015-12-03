@@ -89,13 +89,11 @@ $(function() {
             console.log(event);
 
             
-            // not every event has a url. if no event url, link to meetup.com/"urlname"
-
+            // if there's no event url, try to put one together from data
             
             if (!event.event_url) {
             	event.event_url ='http://meetup.com/' + event.group.urlname + '/events/' + event.id;
             	console.log(event.event_url);
-            	//urlName = 'meetup.com/' + event.group.urlname; 
             }
 
 

@@ -59,7 +59,7 @@ $(function() {
 
             
             if (!event.event_url) {
-            	event.event_url ='http://meetup.com/' + event.group.urlname;
+            	event.event_url ='http://meetup.com/' + event.group.urlname + '/events/' + event.id;
             	console.log(event.event_url);
             	//urlName = 'meetup.com/' + event.group.urlname; 
             }

@@ -64,7 +64,7 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 
 
-    
+
 });
 
 // configure body-parser (for form data)
@@ -157,17 +157,27 @@ app.get('/api/events', function(req, res) {
 
 // show signup view
 app.get('/signup', function(req, res) {
-	if (req.user) {
-		res.redirect('/profile');
- 	} else {
- 		res.render('signup', { user: req.user, errorMessage: req.flash('signupError') });
- 	}
-    
+    if (req.user) {
+        res.redirect('/profile');
+    } else {
+        res.render('signup', {
+            user: req.user,
+            errorMessage: req.flash('signupError')
+        });
+    }
+
 });
 
 // show login view
 app.get('/login', function(req, res) {
-    res.render('login');
+    if (req.user) {
+        res.redirect('/profile');
+    } else {
+        res.render('login', {
+            user: req.user,
+            errorMessage: req.flash('error')
+        });
+    }
 });
 
 //authenticate MEETUP request
@@ -210,10 +220,11 @@ app.post('/signup', function(req, res) {
 });
 
 // log in user
-app.post('/login', passport.authenticate('local'), function(req, res) {
-    // res.send('logged in!');
-    res.redirect('/profile');
-});
+app.post('/login', passport.authenticate('local', {
+	successRedirect:'/profile',
+	failureRedirect: '/login',
+	failureFlash: 'Incorrect username or password.'
+}));
 
 // log out user
 app.get('/logout', function(req, res) {

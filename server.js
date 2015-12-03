@@ -100,11 +100,9 @@ app.get('/', function(req, res) {
 
 
 app.get('/takeahike', function(req, res) {
-
     res.render('takeahike', {
         user: req.user
     });
-
 });
 
 

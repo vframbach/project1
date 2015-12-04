@@ -12,14 +12,9 @@ $(document).ready(function() {
     var newMsg = $('#new-msg').val();
 
 
-  if (username1){
     // send new message to socket (server)
-    socket.emit('chat message', username1 + ' says: ' + newMsg);
-    $('#new-msg').val('');
-  } else {  
-    socket.emit('chat message', username2 + ' says: ' + newMsg);
-    $('#new-msg').val('');
-  }
+    socket.emit('chat message', username + ' says: ' + newMsg);
+    $('#new-msg').val('').focus();
   });
 
   // receive message from socket (server)

@@ -13,7 +13,7 @@
 		<title>Profile page</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -28,71 +28,75 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/takeahike">Map
-							<span class="sr-only">(current)</span></a></li>
-						</ul>
-						<form class="nav navbar-nav navbar-right">
-							{{#if user}}
-							<a href="#" class="btn btn-link">Profile</a>
-							<!-- Single button -->
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Log out <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="/logout">Log out</a></li>
-								</ul>
-							</div>
-							{{else}}
-							<a href="/login" class="btn btn-link">Log in</a>
-							<a href="/signup" class="btn btn-link">Sign up</a>
-							{{/if}}
-						</form>
-						</div><!-- /.navbar-collapse -->
-						</div><!-- /.container-fluid -->
-					</nav>
-					{{#if user}}
-					<script type="text/javascript">
-						var username1 = "{{user.displayName}}";
-						var username2 = "{{user.username}}";
-					</script>
-					<div class="jumbotron container welcome-box">
-						{{#if user.displayName}}
-						<h2>Welcome, {{user.displayName}}!</h2>
-						<p>This is your profile page.</p>
+					</ul>
+					<form class="nav navbar-nav navbar-right">
+						{{#if user}}
+						<a href="#" class="btn btn-link">Profile</a>
+						<!-- Single button -->
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Log out <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a href="/logout">Log out</a></li>
+							</ul>
+						</div>
 						{{else}}
-						
-						<h2>Welcome, {{user.username}}!</h2>
-						<p>This is your profile page.</p>
+						<a href="/login" class="btn btn-link">Log in</a>
+						<a href="/signup" class="btn btn-link">Sign up</a>
 						{{/if}}
-						
-					</div>
-					<div class="col-md-3">
-					</div>
-					<div class="col-md-6">
-						<h4>Chat with other hikers</h4>
-						<!-- list of messages -->
-					<ul id="messages"></ul>
-					<!-- form to send a new message -->
-					<form id="send-msg">
-						<input type="text" id="new-msg" placeholder="Your message" autofocus>
-						<input type="submit" value="Send">
 					</form>
+					</div><!-- /.navbar-collapse -->
+					</div><!-- /.container-fluid -->
+				</nav>
+				{{#if user}}
+				<script type="text/javascript">
+					var username = "{{user.displayName}}" || "{{user.username}}";
+				</script>
+				<div class="jumbotron container welcome-box">
+					{{#if user.displayName}}
+					<h2>Welcome, {{user.displayName}}!</h2>
+					<p>This is your profile page.</p>
+					{{else}}
+					
+					<h2>Welcome, {{user.username}}!</h2>
+					<p>This is your profile page.</p>
+					{{/if}}
+					
 				</div>
-				{{/if}}
 				<div class="col-md-3">
-
+					<h3>Chat with other hikers</h3>
+					<p>Coordinate rides to meetups</p>
+					<p>Discover new hiking partners</p>
+					<p>Share hiking knowledge</p>
 				</div>
-				<!-- jquery -->
-				<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-				<!-- bootstrap js -->
-				<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-				<!-- handlebars -->
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-				<!-- socket.io -->
-				<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-				<!-- custom script -->
-				<script type="text/javascript" src="profile.js"></script>
-				<!-- <script type="text/javascript" src="takeahike.js"></script> -->
-			</body>
-		</html>
+				<div class="col-md-6">
+					
+					<!-- list of messages -->
+				<ul id="messages"></ul>
+				<!-- form to send a new message -->
+				<form id="send-msg">
+					<div class="input-group">
+						<input type="text" class="form-control" id="new-msg" placeholder="Your message" autofocus>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Send</button>
+						</span>
+					</div>
+				</form>
+			</div>
+			{{/if}}
+			<div class="col-md-3">
+			</div>
+			<!-- jquery -->
+			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+			<!-- bootstrap js -->
+			<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+			<!-- handlebars -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+			<!-- socket.io -->
+			<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+			<!-- custom script -->
+			<script type="text/javascript" src="profile.js"></script>
+			<!-- <script type="text/javascript" src="takeahike.js"></script> -->
+		</body>
+	</html>

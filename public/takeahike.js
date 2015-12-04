@@ -11,6 +11,7 @@ function initMap() {
 }
 
 // look in url for zipcode
+// uses regular expression (regex), a special text string for describing a search pattern
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -19,6 +20,8 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+// use cookies to save most recent zip code for a set time period
+// UTC is coordinated universal time
 // cookie name, cookie value, cookie expiration
 // http://www.w3schools.com/js/js_cookies.asp
 function setCookie(cname, cvalue, exdays) {
@@ -66,7 +69,7 @@ $(function() {
         zipcode: zipcode
     }, function(data) {
     	var infowindow = new google.maps.InfoWindow();
-        //console.log(data.events[0].venue.lon);
+        // bounds sets boundaries for google map, based on lat & lng results
         var bounds = new google.maps.LatLngBounds();
         data.events.forEach(function(event) {
             var lat;
@@ -128,6 +131,8 @@ $(function() {
             // map location adjusts to where markers are
             bounds.extend(marker.position);
 
+            // info window opens when marker is clicked
+            // when next marker is clicked, previous box closes
             marker.addListener('click', function() {
             	infowindow.close();
             	infowindow.setContent(contentString);
@@ -136,9 +141,10 @@ $(function() {
         });
         map.fitBounds(bounds);
 
-        var takeahikeHtml = template({
+        // displays results on page
+        var eventListHtml = template({
             events: data.events
         });
-        $('.meetup-results').html(takeahikeHtml);
+        $('.meetup-results').html(eventListHtml);
     });
 });

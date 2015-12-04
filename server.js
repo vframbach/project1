@@ -70,31 +70,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
+//////////////////////////
+//STATIC ROUTES
+
 // server static files from public folder
 app.use(express.static(__dirname + '/public'));
 
-// express will use hbs in views directory
-app.set('view engine', 'hbs');
-hbs.registerPartials(__dirname + '/views/partials');
-// http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/
-hbs.registerHelper('ifequal', function(lvalue, rvalue, options) {
-    if (arguments.length < 3)
-        throw new Error("Handlebars Helper equal needs 2 parameters");
-    if( lvalue!=rvalue ) {
-        return options.inverse(this);
-    } else {
-        return options.fn(this);
-    }
-});
-hbs.registerHelper('ifnotequal', function(lvalue, rvalue, options) {
-    if (arguments.length < 3)
-        throw new Error("Handlebars Helper equal needs 2 parameters");
-    if( lvalue==rvalue ) {
-        return options.inverse(this);
-    } else {
-        return options.fn(this);
-    }
-});
+
 
 // passport-meetup config
 passport.use(new MeetupOAuth2Strategy({
@@ -109,6 +92,35 @@ passport.use(new MeetupOAuth2Strategy({
 }));
 
 
+
+// express will use hbs in views directory
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+
+// for use in partial header, allows comparison operators
+// allow criteria within partial to be shown/hidden from different pages
+// http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/
+hbs.registerHelper('ifequal', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue!=rvalue ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+
+hbs.registerHelper('ifnotequal', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue==rvalue ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+
+
 // HOMEPAGE ROUTE
 
 app.get('/', function(req, res) {
@@ -116,8 +128,6 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-///////////////////////////////
-// STATIC ROUTES
 
 // auth routes
 
@@ -146,20 +156,21 @@ app.get('/login', function(req, res) {
     }
 });
 
-// log in user
+// log in user, redirect them to profile page
+// if there is an error, will display login page with error message
 app.post('/login', passport.authenticate('local', {
 	successRedirect:'/profile',
 	failureRedirect: '/login',
 	failureFlash: 'Incorrect username or password.'
 }));
 
-// log out user
+// log out user, redirects to landing page
 app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
 
-// shows user profile page
+// if user is logged in, shows user profile page
 app.get('/profile', function(req, res) {
 	// user goes to profile page and isn't logged in, redirects to login page
     if (!req.user) {
@@ -187,9 +198,6 @@ io.on('connection', function(socket) {
     });
 });
 
-// send username directly to profile.js so it displays with chat message
-// app.get( )
-// res.json
 ////////////////////////////////
 //API ROUTES
 
@@ -200,7 +208,7 @@ app.get('/takeahike', function(req, res) {
 });
 
 
-// when zip code is entered on index page, returns results on takeahike page
+// when zip code is entered, returns results on takeahike page
 app.get('/api/events', function(req, res) {
     var zipcode = req.query.zipcode;
 
@@ -262,7 +270,7 @@ app.get('/auth/meetup/callback', passport.authenticate('meetup', {
 );
 
 // sign up new user, then log them in, redirect to profile page
-
+// if username was already taken when trying to sign up, error message appears
 // hashes and salts passport, saves new user to db
 app.post('/signup', function(req, res) {
     User.register(new User({

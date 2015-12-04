@@ -14,20 +14,22 @@
 					{{/if}}
 					
 				</div>
-				<div class="col-md-3">
+				<div class="container headline">
 					<h3>Chat with other hikers</h3>
-					<p>Coordinate rides to meetups</p>
-					<p>Discover new hiking partners</p>
-					<p>Share hiking knowledge</p>
+				</div>	
+				<div class="col-md-2">
 				</div>
-				<div class="col-md-6">
-					
+				<div class="col-md-4">
 					<!-- list of messages -->
-				<ul id="messages"></ul>
+					<ul id="messages"></ul>	
+				</div>
+				<div class="col-md-4">
+					
+					
 				<!-- form to send a new message -->
 				<form id="send-msg">
 					<div class="input-group">
-						<input type="text" class="form-control" id="new-msg" placeholder="Your message" autofocus>
+						<input type="text" autocomplete="off" class="form-control" id="new-msg" placeholder="Your message" autofocus>
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="submit">Send</button>
 						</span>
@@ -35,7 +37,7 @@
 				</form>
 			</div>
 			{{/if}}
-			<div class="col-md-3">
+			<div class="col-md-2">
 			</div>
 			<!-- jquery -->
 			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

@@ -5,3 +5,7 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+.headline {
+	text-align: center;
+}

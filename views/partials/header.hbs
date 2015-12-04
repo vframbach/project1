@@ -9,6 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="{{pageName}}.css">
+		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 		
 		<title>Hikes near me</title>
 	</head>
@@ -36,13 +37,13 @@
 						</form>
 					{{/ifequal}}
 					<form class="navbar-form navbar-right">
-						{{#ifnotequal pageName 'profile'}}
-						<a href="/profile" class="btn btn-link">Profile</a>
-						{{/ifnotequal}}
 						{{#ifnotequal pageName 'takeahike'}}
 						<a href="/takeahike" class="btn btn-link">Map</a>
 						{{/ifnotequal}}
 						{{#if user}}
+							{{#ifnotequal pageName 'profile'}}
+							<a href="/profile" class="btn btn-link">Profile</a>
+							{{/ifnotequal}}
 						<a href="/logout" class="btn btn-link">Log out</a>
 						{{else}}
 						<a href="/login" class="btn btn-link">Log in</a>

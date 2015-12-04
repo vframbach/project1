@@ -161,13 +161,14 @@ app.get('/logout', function(req, res) {
 
 // shows user profile page
 app.get('/profile', function(req, res) {
-    res.render('profile', {
-        user: req.user
-    });
-// user goes to profile page and isn't logged in, redirects to login page
+	// user goes to profile page and isn't logged in, redirects to login page
     if (!req.user) {
     	res.redirect('/login');
-    }
+    } else {
+	    res.render('profile', {
+	        user: req.user
+	    });
+	}
 });
 
 // web socket

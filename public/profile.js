@@ -19,7 +19,7 @@ $(document).ready(function() {
 
   // receive message from socket (server)
 socket.on('chat message', function (msg) {
-  $('#messages').append($('<li>' +msg + '</li>'));
+  $('#messages').append($('<li class="chat-bubbles">' +msg + '</li>'));
 });
 
 

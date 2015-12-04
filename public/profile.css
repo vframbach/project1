@@ -9,3 +9,10 @@
 .headline {
 	text-align: center;
 }
+
+.chat-bubbles {
+	padding: 6px 10px;
+    margin: 4px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}

@@ -8,12 +8,12 @@
 		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="takeahike.css">
 		<link rel="stylesheet" type="text/css" href="{{pageName}}.css">
-		
-		<title>Hikes near me</title>
+		<title>Sign up</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-fixed-top">
+		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -27,30 +27,15 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					{{#ifequal pageName 'takeahike'}}
-						<form class="navbar-form navbar-left" method="get" action="takeahike">
-							<div class="form-group">
-								<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required minlength="5">
-								<button type="submit" class="btn btn-default">Go!</button>
-							</div>
-						</form>
-					{{/ifequal}}
-					<form class="navbar-form navbar-right">
-						{{#ifnotequal pageName 'profile'}}
-						<a href="/profile" class="btn btn-link">Profile</a>
-						{{/ifnotequal}}
-						{{#ifnotequal pageName 'takeahike'}}
+					<ul class="nav navbar-nav navbar-right">
 						<a href="/takeahike" class="btn btn-link">Map</a>
-						{{/ifnotequal}}
-						{{#if user}}
-						<a href="/logout" class="btn btn-link">Log out</a>
-						{{else}}
+						{{#ifequal pageName 'signup'}}
 						<a href="/login" class="btn btn-link">Log in</a>
+						{{/ifequal}}
+						{{#ifequal pageName 'login'}}
 						<a href="/signup" class="btn btn-link">Sign up</a>
-						{{/if}}
-
-					</form>
-					
+						{{/ifequal}}
+					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>

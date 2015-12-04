@@ -9,3 +9,9 @@ html {
 body {
 	text-align: center;
 }
+
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+}

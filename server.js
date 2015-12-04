@@ -75,6 +75,26 @@ app.use(express.static(__dirname + '/public'));
 
 // express will use hbs in views directory
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+// http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/
+hbs.registerHelper('ifequal', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue!=rvalue ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+hbs.registerHelper('ifnotequal', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue==rvalue ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
 
 // passport-meetup config
 passport.use(new MeetupOAuth2Strategy({

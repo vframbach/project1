@@ -13,7 +13,7 @@
 		<title>Hikes near me</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -27,13 +27,13 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<form class="form-inline" method="get" action="takeahike">
+					<form class="navbar-form navbar-left" method="get" action="takeahike">
 						<div class="form-group">
 							<input type="text" name="zipcode" class="form-control" placeholder="Enter zip code" required minlength="5">
 							<button type="submit" class="btn btn-default">Go!</button>
 						</div>
 					</form>	
-					<form class="nav navbar-nav navbar-right">
+					<form class="navbar-form navbar-right">
 						{{#if user}}
 						<a href="/profile" class="btn btn-link">Profile</a>
 						<a href="/logout" class="btn btn-link">Log out</a>
@@ -45,36 +45,36 @@
 					
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
-			</nav>
-			<script id="meetup-results-template" type="text/x-handlebars-template">
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row takeahike-page">
+				<div class="meetup-results col-sm-4"></div>
+				<script id="meetup-results-template" type="text/x-handlebars-template">
 				\{{#each events}}
 					<h3>\{{name}}</h3>
 					<p>\{{group.name}}</p>
 					<p>\{{venue.address_1}}</p>
 					<p>\{{venue.city}}, \{{venue.state}}</p>
-					<p><a href="\{{event_url}}" target="_blank" class="btn btn-default">Meetup website</a></p>
-					<p>\{{venue.lat}}</p>
-					<p>\{{venue.lon}}</p> 
+					<p><a href="\{{event_url}}" target="_blank" class="btn btn-default">Meetup website</a></p> 
 				\{{/each}}
-			</script>
+				</script>
 			</div>
-			<div class="row">
-				<div class="meetup-results col-sm-4"></div>
+		</div>
+
+		<div class="fix-map">
+			<div id="map"></div>
+		</div>
 				
-				<div class="col-sm-8">
-					<div id="map"></div>
-				</div>
-			</div>
-				
-			<!-- jquery -->
-			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-			<!-- bootstrap js -->
-			<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-			<!-- handlebars -->
-			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-			<!-- custom script -->
-			<script type="text/javascript" src="main.js"></script>
-			<script type="text/javascript" src="takeahike.js"></script>
-			<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuo9eqQBk5umxACJHmsGgPMbvfbD1zh0&callback=initMap"></script>
-			</body>
-		</html>
+		<!-- jquery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- bootstrap js -->
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<!-- handlebars -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+		<!-- custom script -->
+		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="takeahike.js"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRuo9eqQBk5umxACJHmsGgPMbvfbD1zh0&callback=initMap"></script>
+	</body>
+</html>

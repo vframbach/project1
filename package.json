@@ -4,7 +4,7 @@
   "description": "The goal of this project is to create a map of where hiking meetups are located, around a given zip code.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js"
   },
   "repository": {

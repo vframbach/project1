@@ -9,6 +9,7 @@
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="takeahike.css">
+		<link rel="stylesheet" type="text/css" href="profile.css">
 		<title>Profile page</title>
 	</head>
 	<body>
@@ -27,51 +28,66 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/takeahike">Map <span class="sr-only">(current)</span></a></li>
-					</ul>
-					<form class="nav navbar-nav navbar-right">
-						{{#if user}}
-						<a href="/logout" class="btn btn-default">Log out</a>
+						<li class="active"><a href="/takeahike">Map
+							<span class="sr-only">(current)</span></a></li>
+						</ul>
+						<form class="nav navbar-nav navbar-right">
+							{{#if user}}
+							<a href="/logout" class="btn btn-link">Log out</a>
+							<!-- Single button -->
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Log out <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="/logout">Log out</a></li>
+								</ul>
+							</div>
+							{{else}}
+							<a href="/login" class="btn btn-link">Log in</a>
+							<a href="/signup" class="btn btn-link">Sign up</a>
+							{{/if}}
+						</form>
+						</div><!-- /.navbar-collapse -->
+						</div><!-- /.container-fluid -->
+					</nav>
+					{{#if user}}
+					<script type="text/javascript">
+						var username1 = "{{user.displayName}}";
+						var username2 = "{{user.username}}";
+					</script>
+					<div class="jumbotron container welcome-box">
+						{{#if user.displayName}}
+						<h2>Welcome, {{user.displayName}}!</h2>
+						<p>This is your profile page.</p>
 						{{else}}
-						<a href="/login" class="btn btn-default">Log in</a>
-						<a href="/signup" class="btn btn-default">Sign up</a>
+						
+						<h2>Welcome, {{user.username}}!</h2>
+						<p>This is your profile page.</p>
 						{{/if}}
+						
+					</div>
+					<div class="col-md-8">
+						<h4>Chat with other hikers</h4>
+						<!-- list of messages -->
+					<ul id="messages"></ul>
+					<!-- form to send a new message -->
+					<form id="send-msg">
+						<input type="text" id="new-msg" placeholder="Your message" autofocus>
+						<input type="submit" value="Send">
 					</form>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-		</nav>	
-		{{#if user}}
-			<script type="text/javascript">
-				var username = "{{user.displayName}}";
-			</script>
-			<div class="jumbotron container">	
-				<h2>Welcome, {{user.displayName}}!</h2>
-				<p>This is your profile page.</p>
-				
-			</div>
-			<div class="col-md-8">
-
-			 <!-- list of messages -->
-		  		<ul id="messages">Chat with other members</ul>
-
-			  <!-- form to send a new message -->
-			  <form id="send-msg">
-			    <input type="text" id="new-msg" placeholder="Your message" autofocus>
-			    <input type="submit" value="Send">
-			  </form>
-		  </div>
-	  {{/if}}
-  <!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <!-- handlebars -->
-			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-<!-- socket.io -->
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>	
-    <!-- custom script -->
-<script type="text/javascript" src="profile.js"></script>
-<!-- <script type="text/javascript" src="takeahike.js"></script> -->
-
-</body>
-</html>	
+				</div>
+				{{/if}}
+				<!-- jquery -->
+				<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+				<!-- bootstrap js -->
+				<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+				<!-- handlebars -->
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+				<!-- socket.io -->
+				<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+				<!-- custom script -->
+				<script type="text/javascript" src="profile.js"></script>
+				<!-- <script type="text/javascript" src="takeahike.js"></script> -->
+			</body>
+		</html>

@@ -8,6 +8,7 @@
 		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="header.css">
 		<link rel="stylesheet" type="text/css" href="{{pageName}}.css">
 		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 		
@@ -26,6 +27,27 @@
 					</button>
 					<a class="navbar-brand" href="/">Take a hike</a>
 				</div>
+					{{#ifnotequal pageName 'takeahike'}}
+						
+						{{/ifnotequal}}
+						{{#if user}}
+							{{#ifnotequal pageName 'profile'}}
+								<a href="/profile" class="btn btn-link">Profile</a>
+							{{/ifnotequal}}
+						<div class="pull-right">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							    Log Out<span class="caret"></span></button>
+							   		<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							    		<li><a href="/logout">Log Out</a></li>
+								  	</ul>
+							</div>						{{else}}
+						<a href="/login" class="btn btn-link">Log in</a>
+						<a href="/signup" class="btn btn-link">Sign up</a>
+					{{/if}}
+
+						<a href="/takeahike" class="btn btn-link pull-right">Map</a>
+						</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					{{#ifequal pageName 'takeahike'}}
@@ -36,21 +58,15 @@
 							</div>
 						</form>
 					{{/ifequal}}
-					<form class="navbar-form navbar-right">
-						{{#ifnotequal pageName 'takeahike'}}
-						<a href="/takeahike" class="btn btn-link">Map</a>
-						{{/ifnotequal}}
-						{{#if user}}
-							{{#ifnotequal pageName 'profile'}}
-							<a href="/profile" class="btn btn-link">Profile</a>
-							{{/ifnotequal}}
-						<a href="/logout" class="btn btn-link">Log out</a>
-						{{else}}
-						<a href="/login" class="btn btn-link">Log in</a>
-						<a href="/signup" class="btn btn-link">Sign up</a>
-						{{/if}}
+				<!-- 	<form class="navbar-form navbar-right"> -->
+				<div class="row">
+					<div class="col-md-3 col-md-offset-9">
+						
+					</div>
+				</div>
+						
 
-					</form>
+					<!-- </form> -->
 					
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
